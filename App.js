@@ -17,20 +17,20 @@ const styles = StyleSheet.create({
   parentView: {
     flex:1,
     //backgroundColor: "#ffff99",
-    flexDirection: "column"
+    flexDirection: "column",
   },
   containerOne: {
     flex:100,
-    backgroundColor: "#fa6d98"   
+    backgroundColor: "#fa6d98",  
   },
   containerTwo: {
     flex:8,
-    backgroundColor: "#fa6d98"   
+    backgroundColor: "#fa6d98",   
   },
   containerThree: {
     flex:2,
-    backgroundColor: "#fa6d98" 
-  }
+    backgroundColor: "#fa6d98", 
+  },
 });
 
 
