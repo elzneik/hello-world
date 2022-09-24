@@ -44,4 +44,4 @@ and location data.
 * The app’s codebase must contain comments.
 
 ## Design
-![hello-world Welcome Screen]()
+![hello-world Welcome Screen](https://github.com/elzneik/hello-world/blob/master/picture/AppDesign.PNG)
