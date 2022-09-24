@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, TextInput } from 'react-native';
 
-export default class Screen1 extends React.Component {
+export default class Screen1 extends Component {
     constructor(props) {
         super(props);
         this.state = { name: ""};
@@ -12,8 +12,8 @@ export default class Screen1 extends React.Component {
             <Text>Hello Screen1!</Text>
             <TextInput
                 style={{height: 40, borderColor: "gray", borderWidth: 1}}
-                onChangeText={name => this.setState({name})}
-                value={this.state.text}
+                onChangeText={(name) => this.setState({name})}
+                value={this.state.name}
                 placeholder="Type here..."
             />
             <Button
