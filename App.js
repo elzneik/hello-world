@@ -38,7 +38,7 @@ export default class HelloWorld extends Component {
 }
 */
 
-check code from CF - to get rid of the issue
+// check code from CF - to get rid of the issue
 import React, { Component } from "react";
 // import { StyleSheet, View, Text, TextInput, Button } from "react-native";
 import Chat from "./components/Chat";
