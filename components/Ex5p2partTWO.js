@@ -2,15 +2,20 @@
 // npm install react-native-gifted-chat --save
 
 /*
-// import Gifted Chat library
+// import Gifted Chat library into Chat.js
 import { GiftedChat } from 'react-native-gifted-chat'
+import { 
+    View, 
+    Platform, 
+    KeyboardAvoidingView 
+} from 'react-native';
 
 // add set the state with a stetic message
 export class Chat extends React.Component {
     constructor() {
       super();
       this.state = {
-        messages: [],
+        messages: [ ],
       }
 }
 
@@ -40,12 +45,18 @@ onSend(messages = []) {
  }
 
 // Render the Chat interface
-<GiftedChat
-  messages={this.state.messages}
-  onSend={messages => this.onSend(messages)}
-  user={{
-    _id: 1,
-  }}
-/>
+<view style={{flex:1}}>
+    <GiftedChat
+    messages={this.state.messages}
+    onSend={messages => this.onSend(messages)}
+    user={{
+        _id: 1,
+    }}
+    />
+    { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null
+    }
+</view>
 
+
+Try code out!!
 */
