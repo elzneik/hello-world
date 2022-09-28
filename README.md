@@ -54,3 +54,32 @@ and location data.
 * Color options HEX codes: #090C08; #474056; #8A95A5; #B9C6AE
 * Start chatting button: font size 16, font weight 600, font color #FFFFFF, button color #757083
 
+## Development Process
+### Setup Expo as Development Environment
+1. Install Expo CLI
+```
+npm insatll expo-cli --location=global
+```
+2. Create a new expo project
+```
+expo init [projectname]
+```
+3. Navigate to the project
+```
+cd [projectname]
+```
+4. Start expo project
+```
+npm start or expo start
+```
+### Install React Navigation library to navigate between screens
+1. Navigate to project folder and run
+```
+npm install react-navigation
+```
+2. Install necessary dependencies
+```
+npm install @react-navigation/native @react-navigation/stack
+```
+
+expo install react-native-reanimated react-native-gesture-handler react-native-screens react-native-safe-area-context @react-native-community/masked-view
