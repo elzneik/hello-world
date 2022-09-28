@@ -11,7 +11,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 //Create the navigator
 const Stack = createStackNavigator();
 // const Tab = createBottomTabNavigator();
-  export default class App extends React.Component {
+  export default class App extends Component {
  
   render() {
     return (
