@@ -20,8 +20,8 @@ export default class Start extends Component {
               value={this.state.name}
               placeholder="Your Name"
             />
-
             <Button
+              style={styles.chatButton}
               title="Start Chatting"
               onPress={() =>
                 this.props.navigation.navigate("Chat", { name: this.state.name })

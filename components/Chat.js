@@ -9,8 +9,9 @@ export default class Chat extends Component {
 
     return (
       <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text>Hello There!</Text>
+        <Text>Welcome to the Chat</Text>
         < Button
+            style={styles.chatButton}
             title="Go to Start"
             onPress={() => this.props.navigation.navigate("Start")}
         />
