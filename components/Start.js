@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
 
   textAppTitle: {
     fontSize: 45,
-    fontWeight: 600,
+    fontWeight: "600",
     color: "#FFFFFF",
   },
 
