@@ -96,13 +96,13 @@ const styles = StyleSheet.create({
     width: "88%",
     height: 50,
     fontSize: 16,
-    fontWeight: 300,
+    fontWeight: "300",
     color: "#757083",
     opacity: "50%",
   },
   textInputField: { 
     fontSize: 16,
-    fontWeight: 300,
+    fontWeight: "300",
     color: "#757083",
     textAlign: "center",
   },
@@ -137,12 +137,12 @@ const styles = StyleSheet.create({
   },
   colorText: {
     fontSize: 45,
-    fontWeight: 600,
+    fontWeight: "600",
     color: "#FFFFFF",
   },
   textLabel: { 
     fontSize: 16,
-    fontWeight: 300,
+    fontWeight: "300",
     color: "#757083",
     textAlign: "left",
   },
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
    // 4. Button to chat feature
    chatButton: {
     fontSize: 16,
-    fontWeight: 600,
+    fontWeight: "600",
     color: "#FFFFFF",
   },
 
