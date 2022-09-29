@@ -21,22 +21,20 @@ export default class Start extends Component {
         <ImageBackground 
             source={require('../picture/BackgroundImage.png')} 
             style={styles.image}>
-        <Text style={styles.textAppTitle}>Welcome to the "Hello World" chat</Text>
+        <Text style={styles.textAppTitle}>Chat App</Text>
             
             <View style={styles.box}>
-
               {/* User Name Input */}
-              <Text style={styles.textLabel}>Choose Background Color</Text>
+              
               <TextInput
-                style={styles.textInputField}
+                style={[styles.textInputField, styles.inputField]}
                 onChangeText={(name) => this.setState({ name })}
                 value={this.state.name}
                 placeholder="Your Name"
               />
-
               {/* Color Choice Palette */}
               <View style={styles.colorBox}>
-                <Text style={styles.colorText}>Choose a Color</Text>
+                <Text style={styles.colorText}>Background Color</Text>
                 <View style={styles.colorChoicePalette}>
                   <TouchableOpacity style={[styles.color, styles.colorBlack]} onPress={() => this.setState({color: "#090C08"})} />
                   <TouchableOpacity style={[styles.color, styles.colorViolet]} onPress={() => this.setState({color: "#474056"})} />
@@ -45,15 +43,14 @@ export default class Start extends Component {
                 </View>
               </View>
 
-              {/* Button */}
-                <Button
-                  style={styles.chatButton}
-                  title="Start Chatting"
-                  onPress={() =>
-                    this.props.navigation.navigate("Chat", { name: this.state.name, color: this.state.color })
-                  }
-                />
-          </View>
+              <View>
+                  <TouchableOpacity 
+                    style={styles.button} 
+                    onPress={() => this.props.navigation.navigate('Chat', { name: this.state.name, color: this.state.color })}>
+                    <Text style={styles.buttonText}>Start Chatting</Text>
+                  </TouchableOpacity>
+              </View>
+            </View> 
         </ImageBackground>
       </View>
     );
@@ -79,6 +76,7 @@ const styles = StyleSheet.create({
     fontSize: 45,
     fontWeight: "600",
     color: "#FFFFFF",
+    marginBottom: 100,
   },
 
   // Box contains:
@@ -87,7 +85,7 @@ const styles = StyleSheet.create({
     height: "44%",
     width: "88%", 
     backgroundColor: "#fff", 
-    // borderWidth: 1,
+    borderWidth: 2,
     alignItems: "center",
     justifyContent: "space-evenly",
   },
@@ -99,6 +97,9 @@ const styles = StyleSheet.create({
     fontWeight: "300",
     color: "#757083",
     opacity: "50%",
+    borderColor: 'gray',
+    borderWidth: 2,
+    borderRadius: 10,
   },
   textInputField: { 
     fontSize: 16,
@@ -106,22 +107,36 @@ const styles = StyleSheet.create({
     color: "#757083",
     textAlign: "center",
   },
+  textLabel: { 
+    fontSize: 16,
+    fontWeight: "300",
+    color: "#757083",
+    textAlign: "left",
+    marginBottom: 10,
+    marginTop: 20,
+    
+  },
+
   // 3. Color palette
   colorBox: {
     width: "88%",
     height: "60%",
-    marginLeft: "6%",
     justifyContent: "center",
   },
   colorChoicePalette: {
     flexDirection: "row",
     alignItems: "Center",
     cursor: "pointer",
+    justifyContent: "space-between",
+    //borderColor: 'gray',
+    //borderWidth: 2,
+    //borderRadius: 10,
   },
   color: {
     width: 50,
     height: 50,
     borderRadius: 25,
+    
   },
   colorBlack: {
     backgroundColor: '#090C08',
@@ -136,16 +151,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#B9C6AE',
   },
   colorText: {
-    fontSize: 45,
-    fontWeight: "600",
-    color: "#FFFFFF",
-  },
-  textLabel: { 
     fontSize: 16,
     fontWeight: "300",
     color: "#757083",
-    textAlign: "left",
+    textAlign: "center",
+    marginBottom: 10,
+    
   },
+  
 
 
    // 4. Button to chat feature
@@ -153,6 +166,25 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     color: "#FFFFFF",
+    marginBottom: 20,
+    borderColor: 'gray',
+    borderWidth: 2,
+    borderRadius: 10,
   },
 
+  button: {
+    height: 50,
+    width: '100%',
+    backgroundColor: '#757083',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 2,
+  },
+
+  buttonText: {
+    padding: 10,
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
 });
