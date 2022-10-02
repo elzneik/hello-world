@@ -109,7 +109,7 @@ export default class Chat extends Component {
            uid: this.state.uid,
           _id: message._id,
           text: message.text,
-          createdAt: message.createdAt.toDate(),
+          createdAt: message.createdAt,
           user: message.user,
       });
     }
