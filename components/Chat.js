@@ -17,7 +17,12 @@ export default class Chat extends Component {
       this.state = {
         messages: [],
         uid: 0,
-        user,
+        user: {
+          _id: '',
+          avatar: '',
+          name: '',
+      },
+        isConnected: false,
       };
     
     // constructor for firebase
@@ -36,6 +41,7 @@ export default class Chat extends Component {
       this.referenceChatMessages = firebase.firestore().collection('messages');
     }
 
+    //Retrieve collection data & store in messages
     onCollectionUpdate = (querySnapshot) => {
       const messages = [];
       // go through each document
@@ -46,7 +52,11 @@ export default class Chat extends Component {
           _id: data._id,
           text: data.text,
           createdAt: data.createdAt.toDate(),
-          user: data.user,
+          user: {
+            _id: data.user._id,
+            name: data.user.name,
+            avatar: data.user.avatar,
+        },
         });
       });
       this.setState({
@@ -54,7 +64,6 @@ export default class Chat extends Component {
       });
     };
 
-     //Retrieve collection data & store in messages
      componentDidMount() {
       // Display Username
       let { name } = this.props.route.params;
