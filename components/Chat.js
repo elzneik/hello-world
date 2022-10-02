@@ -6,7 +6,7 @@ import {
   StyleSheet
 } from 'react-native';
 import { GiftedChat, Bubble } from 'react-native-gifted-chat'
-// import google cloud firebase database
+
 const firebase = require('firebase');
 require('firebase/firestore');
 
@@ -21,7 +21,7 @@ export default class Chat extends Component {
       };
     
     // constructor for firebase
-    const firebaseConfig = {
+    const firebaseConfig = { 
       apiKey: "AIzaSyBnJhSsawgNApoW2ToDJhRXDe4FfEx5-FU",
       authDomain: "chatapp-bb63d.firebaseapp.com",
       projectId: "chatapp-bb63d",
