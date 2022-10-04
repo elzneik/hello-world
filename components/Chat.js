@@ -79,7 +79,7 @@ export default class Chat extends Component {
         this.setState({
           uid: user.uid,
           messages: [],
-          user {
+          user: {
             _id: user.uid,
             name: name,
         },
@@ -141,9 +141,9 @@ export default class Chat extends Component {
           messages={this.state.messages}
           onSend={messages => this.onSend(messages)}
           user={{
-            _id: this.state.user._uid,
-            name: name,          
-          }}
+            _id: this.state.user._id,
+            name: name,
+        }}
           />
           {/*Prevent hidden input field on Android*/}
           { Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null
