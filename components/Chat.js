@@ -138,7 +138,7 @@ export default class Chat extends Component {
           messages={this.state.messages}
           onSend={messages => this.onSend(messages)}
           user={{
-            _id: this.state.user._id,
+            _id: this.state.user._uid,
             name: name,          
           }}
           />
