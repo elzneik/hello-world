@@ -6,6 +6,7 @@ import {
   StyleSheet
 } from 'react-native';
 import { GiftedChat, Bubble } from 'react-native-gifted-chat'
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const firebase = require('firebase');
 require('firebase/firestore');
@@ -64,7 +65,31 @@ export default class Chat extends Component {
       });
     };
 
+
+    async getMessages() {
+      let messages = '';
+      try {
+        messages = await AsyncStorage.getItem('messages') || [];
+        this.setState({
+          messages: JSON.parse(messages)
+        });
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    async saveMessages() {
+      try {
+        await AsyncStorage.setItem('messages', JSON.stringify(this.state.messages));
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+
+
      componentDidMount() {
+      this.getMessages();
+
       // Display Username
       let { name } = this.props.route.params;
       this.props.navigation.setOptions({ title: name });
@@ -102,7 +127,8 @@ export default class Chat extends Component {
       this.setState(previousState => ({
         messages: GiftedChat.append(previousState.messages, messages),
       }), () => {
-        this.addMessages(this.state.messages[0]);
+        //this.addMessages(this.state.messages[0]);
+        this.saveMessages();
       });
     }
 
