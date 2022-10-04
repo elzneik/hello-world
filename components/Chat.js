@@ -105,11 +105,11 @@ export default class Chat extends Component {
       // check if user is online or offline
       NetInfo.fetch().then(connection => {
         if (connection.isConnected) {
-          console.log('online');
-        } else {
-          console.log('offline');
-        }
-      });
+          this.setState({
+            isConnected: true,
+          });
+            console.log('online');
+       
 
       // Display Username
       let { name } = this.props.route.params;
@@ -133,14 +133,26 @@ export default class Chat extends Component {
         this.unsubscribe = this.referenceChatMessages
           .orderBy("createdAt", "desc")
           .onSnapshot(this.onCollectionUpdate);
+        this.saveMessages();
       });
     }
-    
+    //If the user is offline: Load and display the messages from asyncStorage.
+    else {
+        this.setState ({
+          isConnected: false,
+        })
+        console.log('offline');
+        this.getMessages();
+      }
+    })
+}
+
 
     componentWillUnmount() {
+      if (this.isConnected) {
       this.unsubscribe();
       this.authUnsubscribe();
-
+      }
     }
 
     // Add new message to the previous
@@ -178,7 +190,7 @@ export default class Chat extends Component {
       )
     }
 
-    // show toolbar if user is online
+    // Prevent Gifted Chat from rendering the InputToolbar so users can't compose new messages if offline
     renderInputToolbar(props) {
       if (this.state.isConnected == false) {
       } else {
