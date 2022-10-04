@@ -160,8 +160,9 @@ export default class Chat extends Component {
       this.setState(previousState => ({
         messages: GiftedChat.append(previousState.messages, messages),
       }), () => {
-        //this.addMessages(this.state.messages[0]);
         this.saveMessages();
+        this.addMessages(this.state.messages[0]);
+        this.deleteMessages();
       });
     }
 
@@ -181,6 +182,7 @@ export default class Chat extends Component {
       return (
         <Bubble
           {...props}
+          // wrapperStyle={styles.bubble}
           wrapperStyle={{
             right: {
               backgroundColor: '#000'
@@ -210,6 +212,7 @@ export default class Chat extends Component {
           <GiftedChat
           renderBubble={this.renderBubble.bind(this)}
           messages={this.state.messages}
+          isConnected={this.state.isConnected}
           onSend={messages => this.onSend(messages)}
           user={{
             _id: this.state.user._id,
