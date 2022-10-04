@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import { GiftedChat, Bubble } from 'react-native-gifted-chat'
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import NetInfo from '@react-native-community/netinfo';
 
 const firebase = require('firebase');
 require('firebase/firestore');
@@ -86,9 +87,29 @@ export default class Chat extends Component {
       }
     }
 
+    async deleteMessages() {
+      try {
+        await AsyncStorage.removeItem('messages');
+        this.setState({
+          messages: []
+        })
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+
 
      componentDidMount() {
       this.getMessages();
+
+      // check if user is online or offline
+      NetInfo.fetch().then(connection => {
+        if (connection.isConnected) {
+          console.log('online');
+        } else {
+          console.log('offline');
+        }
+      });
 
       // Display Username
       let { name } = this.props.route.params;
@@ -155,6 +176,18 @@ export default class Chat extends Component {
           }}
         />
       )
+    }
+
+    // show toolbar if user is online
+    renderInputToolbar(props) {
+      if (this.state.isConnected == false) {
+      } else {
+        return(
+          <InputToolbar
+          {...props}
+          />
+        );
+      }
     }
 
     render () {
