@@ -79,7 +79,10 @@ export default class Chat extends Component {
         this.setState({
           uid: user.uid,
           messages: [],
-          user,
+          user {
+            _id: user.uid,
+            name: name,
+        },
         });
         this.unsubscribe = this.referenceChatMessages
           .orderBy("createdAt", "desc")
