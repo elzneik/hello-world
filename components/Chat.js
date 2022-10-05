@@ -15,44 +15,40 @@ export default class Chat extends Component {
 
     constructor () {
       super ();
-      
-      this.state = {
-        messages: [],
-        uid: 0,
-        isConnected: false,
-        image: null,
-        user: {
-          _id: '',
-          avatar: '',
-          name: '',
-        },
-      }
-    
+
     // constructor for firebase
     // firebase adding credential in order to connect to firebase
-    // option to write code: if (!firebase.apps.length) {
-    // option to write code: firebase.initializeApp({   add code from apiKey to MessageSenderId     }); }
-    const firebaseConfig = { 
-      apiKey: "AIzaSyBnJhSsawgNApoW2ToDJhRXDe4FfEx5-FU",
-      authDomain: "chatapp-bb63d.firebaseapp.com",
-      projectId: "chatapp-bb63d",
-      storageBucket: "chatapp-bb63d.appspot.com",
-      messagingSenderId: "451484990502",
-      };
-
-      if (!firebase.apps.length){
-      firebase.initializeApp(firebaseConfig);
-      }
-
-      this.referenceChatMessages = firebase.firestore().collection('messages');
+    if (!firebase.apps.length) {
+      firebase.initializeApp({
+        apiKey: "AIzaSyBnJhSsawgNApoW2ToDJhRXDe4FfEx5-FU",
+        authDomain: "chatapp-bb63d.firebaseapp.com",
+        projectId: "chatapp-bb63d",
+        storageBucket: "chatapp-bb63d.appspot.com",
+        messagingSenderId: "451484990502",
+      });
     }
+
+    this.referenceChatMessages = firebase.firestore().collection("messages");
+
+    this.state = {
+      messages: [],
+      uid: 0,
+      isConnected: false,
+      image: null,
+      user: {
+        _id: '',
+        avatar: '',
+        name: '',
+      },
+    };
 
     
 
 
      // temporarly storage of messages
     // another option for code: getMessages = async () => {
-    async getMessages() {
+    // async getMessages() {
+      getMessages = async () => {
       let messages = '';
       try {
         messages = await AsyncStorage.getItem('messages') || [];
@@ -65,7 +61,7 @@ export default class Chat extends Component {
     };
 
       // firebase storage
-    async saveMessages() {
+      saveMessages = async () => {
       try {
         await AsyncStorage.setItem('messages', JSON.stringify(this.state.messages));
       } catch (error) {
@@ -73,7 +69,7 @@ export default class Chat extends Component {
       }
     };
 
-    async deleteMessages() {
+      deleteMessages = async () => {
       try {
         await AsyncStorage.removeItem('messages');
         this.setState({
@@ -84,7 +80,7 @@ export default class Chat extends Component {
       }
     };
 
-
+/** 
      componentDidMount() {
       this.getMessages();
 
@@ -132,30 +128,29 @@ export default class Chat extends Component {
       }
     })
 }
-
-    /** 
+*/
+     
+    // Display Username
     componentDidMount() {
       this.authUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
         if (!user) {
           firebase.auth().signInAnonymously();
         }
-
+  
         this.setState({
           uid: user.uid,
           messages: []
         });
-
+  
         this.unsubscribe = this.referenceChatMessages.orderBy('createdAt', 'desc').onSnapshot(this.onCollectionUpdate);
       });
     }
-    */
-
+  
     componentWillUnmount() {
-      if (this.isConnected) {
       this.unsubscribe();
       this.authUnsubscribe();
-      }
     }
+    
 
 
     // Retrieve collection data & store in messages
@@ -170,11 +165,11 @@ export default class Chat extends Component {
           _id: data._id,
           text: data.text || "",
           createdAt: data.createdAt.toDate(),
-          user: {
-            _id: data.user._id,
-            name: data.user.name,
-            avatar: data.user.avatar,
-        },
+          user: data.user,
+          //user: {
+          //  _id: data.user._id,
+          //  name: data.user.name,
+          //  avatar: data.user.avatar,},
           image: data.image || null,
           location: data.location || null,
         });
@@ -216,6 +211,7 @@ export default class Chat extends Component {
       });
     };
 
+     
      //define title in navigation bar
      static navigationOptions = ({ navigation }) => {
       return {

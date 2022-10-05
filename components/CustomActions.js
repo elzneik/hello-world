@@ -113,7 +113,7 @@ export default class CustomActions extends React.Component {
     return await snapshot.ref.getDownloadURL();
   };
 
-  // function that handles communication features
+  // function that handles communication features / actionSheet
   onActionPress = () => {
     const options = [
       "Choose From Library",
