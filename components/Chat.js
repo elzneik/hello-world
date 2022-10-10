@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { View, Platform, KeyboardAvoidingView, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import React from 'react';
+import { View, Platform, KeyboardAvoidingView, StyleSheet, Text, Button, TouchableOpacity} from 'react-native';
 import { GiftedChat, Bubble, InputToolbar } from 'react-native-gifted-chat'
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import NetInfo from '@react-native-community/netinfo';
@@ -11,38 +11,37 @@ import { Constants, MapView, Location, Permissions } from 'expo';
 const firebase = require('firebase');
 require('firebase/firestore');
 
-export default class Chat extends Component {
+export default class Chat extends React.Component {
 
     constructor () {
       super ();
 
-    // constructor for firebase
-    // firebase adding credential in order to connect to firebase
-    if (!firebase.apps.length) {
-      firebase.initializeApp({
+      this.state = {
+        messages: [],
+        uid: 0,
+        isConnected: false,
+        //image: null,
+        user: {
+          _id: '',
+          avatar: '',
+          name: '',
+        },
+      };
+
+     // Your web app's Firebase configuration
+     const firebaseConfig = {
         apiKey: "AIzaSyBnJhSsawgNApoW2ToDJhRXDe4FfEx5-FU",
         authDomain: "chatapp-bb63d.firebaseapp.com",
         projectId: "chatapp-bb63d",
         storageBucket: "chatapp-bb63d.appspot.com",
         messagingSenderId: "451484990502",
-      });
-    }
-
-    this.referenceChatMessages = firebase.firestore().collection("messages");
-
-    this.state = {
-      messages: [],
-      uid: 0,
-      isConnected: false,
-      image: null,
-      user: {
-        _id: '',
-        avatar: '',
-        name: '',
-      },
     };
-
-    
+    if (!firebase.apps.length){
+      firebase.initializeApp(firebaseConfig);
+    }
+    // Refering to Firestore collection
+    this.referenceChatMessages = firebase.firestore().collection("messages");
+  }
 
 
      // temporarly storage of messages
@@ -58,7 +57,7 @@ export default class Chat extends Component {
       } catch (error) {
         console.log(error.message);
       }
-    };
+    }
 
       // firebase storage
       saveMessages = async () => {
@@ -67,7 +66,7 @@ export default class Chat extends Component {
       } catch (error) {
         console.log(error.message);
       }
-    };
+    }
 
       deleteMessages = async () => {
       try {
@@ -78,80 +77,67 @@ export default class Chat extends Component {
       } catch (error) {
         console.log(error.message);
       }
-    };
+    }
 
-/** 
      componentDidMount() {
-      this.getMessages();
-
-      // check if user is online or offline
-      NetInfo.fetch().then(connection => {
-        if (connection.isConnected) {
-          this.setState({
-            isConnected: true,
-          });
-            console.log('online');
-       
-
-      // Display Username
+      // required for listing name in default message
+      // used to display title/name at very top of page
       let { name } = this.props.route.params;
       this.props.navigation.setOptions({ title: name });
-
-      // User authentification
+  
+      // retrieves chat messages from asyncStorage instead of filling message state with static data
+      this.getMessages();
+  
+      // reference to messages collection
       this.referenceChatMessages = firebase.firestore().collection("messages");
-
+      // authentication listener
       this.authUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
         if (!user) {
           firebase.auth().signInAnonymously();
         }
+  
+        // update user state
         this.setState({
           uid: user.uid,
-          messages: [],
+          loggedInText: "You are logged in",
           user: {
-            _id: user.uid,
+            // anonymous user doesn't have _id attached to user object so the app breaks when trying to send a message
+            // when you hit send message, the app doesn't know what _id stands for
+            // thus, || user.uid was added because it is the only unique thing that can be used else
+            _id: user._id || user.uid,
             name: name,
-        },
+            avatar: "https://placeholder.com/140/140/any",
+          },
         });
+  
         this.unsubscribe = this.referenceChatMessages
           .orderBy("createdAt", "desc")
           .onSnapshot(this.onCollectionUpdate);
-        this.saveMessages();
       });
-    }
-    //If the user is offline: Load and display the messages from asyncStorage.
-    else {
-        this.setState ({
-          isConnected: false,
-        })
-        console.log('offline');
-        this.getMessages();
-      }
-    })
-}
-*/
-     
-    // Display Username
-    componentDidMount() {
-      this.authUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
-        if (!user) {
-          firebase.auth().signInAnonymously();
+  
+      // reference to active messages collection
+      this.referenceMessagesUser = firebase
+        .firestore()
+        .collection("messages")
+        .where("uid", "==", this.state.uid);
+  
+      // checks if user is online or not
+      NetInfo.fetch().then((connection) => {
+        if (connection.isConnected) {
+          this.setState({ isConnected: true });
+          console.log("online");
+        } else {
+          this.setState({ isConnected: false });
+          console.log("offline");
         }
-  
-        this.setState({
-          uid: user.uid,
-          messages: []
-        });
-  
-        this.unsubscribe = this.referenceChatMessages.orderBy('createdAt', 'desc').onSnapshot(this.onCollectionUpdate);
       });
     }
-  
+
+
     componentWillUnmount() {
       this.unsubscribe();
       this.authUnsubscribe();
     }
-    
-
 
     // Retrieve collection data & store in messages
     // onCollectionUpdte takes snapshot on collection update

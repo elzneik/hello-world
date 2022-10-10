@@ -62,15 +62,17 @@ export default class CustomActions extends React.Component {
 
   // get the location of the user by using GPS
   getLocation = async () => {
+    
+    // const { status } = await Permissions.askAsync(Permissions.LOCATION);
+    const { status } = await Location.requestForegroundPermissionsAsync();
+
     try {
-      // const { status } = await Permissions.askAsync(Permissions.LOCATION);
-      const { status } = await Location.requestForegroundPermissionsAsync();
       if (status === "granted") {
         const result = await Location.getCurrentPositionAsync(
           {}
         ).catch((error) => console.log(error));
-        const longitude = JSON.stringify(result.coords.longitude);
-        const altitude = JSON.stringify(result.coords.latitude);
+        //const longitude = JSON.stringify(result.coords.longitude);
+        //const altitude = JSON.stringify(result.coords.latitude);
         if (result) {
           this.props.onSend({
             location: {
@@ -185,4 +187,17 @@ const styles = StyleSheet.create({
 
 CustomActions.contextTypes = {
   actionSheet: PropTypes.func,
+};
+
+CustomActions.defaultProps = {
+  onSend: () => {},
+  options: {},
+  containerStyle: {},
+  wrapperStyle: {},
+  iconTextStyle: {},
+};
+
+CustomActions.propTypes = {
+  onSend: PropTypes.func,
+  options: PropTypes.object,
 };
