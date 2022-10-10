@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "300",
     color: "#757083",
-    opacity: "50%",
+    opacity: 50,
     borderColor: 'gray',
     borderWidth: 2,
     borderRadius: 10,
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   },
   colorChoicePalette: {
     flexDirection: "row",
-    alignItems: "Center",
+    alignItems: "center",
     cursor: "pointer",
     justifyContent: "space-between",
     //borderColor: 'gray',

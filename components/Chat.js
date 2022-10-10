@@ -20,7 +20,7 @@ export default class Chat extends React.Component {
         messages: [],
         uid: 0,
         isConnected: false,
-        //image: null,
+        image: null,
         user: {
           _id: '',
           avatar: '',
@@ -151,11 +151,11 @@ export default class Chat extends React.Component {
           _id: data._id,
           text: data.text || "",
           createdAt: data.createdAt.toDate(),
-          user: data.user,
-          //user: {
-          //  _id: data.user._id,
-          //  name: data.user.name,
-          //  avatar: data.user.avatar,},
+          // user: data.user,
+          user: {
+            _id: data.user._id,
+            name: data.user.name,
+            avatar: data.user.avatar,},
           image: data.image || null,
           location: data.location || null,
         });
@@ -290,11 +290,11 @@ export default class Chat extends React.Component {
           isConnected={this.state.isConnected}
           onSend={messages => this.onSend(messages)}
           renderActions={this.renderCustomActions}
-          renderInputToolbar={this.renderInputToolbar}
+          renderInputToolbar={this.renderInputToolbar.bind(this)}
           user={{
-            // _id: this.state.user._id,
-            _id: this.state._uid,
-            // name: name,
+            _id: this.state.user._id,
+            //_id: this.state._uid,
+            name: name,
           }}
           />
           {/*Prevent hidden input field on Android*/}
