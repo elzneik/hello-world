@@ -15,6 +15,7 @@ import firestore from 'firebase';
 // require("firebase/firestore");
 
 export default class CustomActions extends React.Component {
+
    // Let the user pick an image from the device's image library
   imagePicker = async () => {
     // expo permission
@@ -105,13 +106,13 @@ export default class CustomActions extends React.Component {
 
     const imageNameBefore = uri.split("/");
     const imageName = imageNameBefore[imageNameBefore.length - 1];
-
+    //reference to the image in which you put the blob data:
     const ref = firebase.storage().ref().child(`images/${imageName}`);
-
+    //store the content retrieved from the Ajax request:
     const snapshot = await ref.put(blob);
-
+    // close connection:
     blob.close();
-
+    //get image URL from storage:
     return await snapshot.ref.getDownloadURL();
   };
 

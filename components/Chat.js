@@ -5,7 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import NetInfo from '@react-native-community/netinfo';
 // use Gifte Chats ActionSheet component to add a buttton that lets user choose between several options
 import CustomActions from './CustomActions';
-import { Constants, MapView, Location, Permissions } from 'expo';
+import { MapView } from 'expo';
 //import firebase from 'firebase';
 //import firestore from 'firebase';
 const firebase = require('firebase');
@@ -19,13 +19,13 @@ export default class Chat extends React.Component {
       this.state = {
         messages: [],
         uid: 0,
-        isConnected: false,
         image: null,
         user: {
           _id: '',
           avatar: '',
           name: '',
         },
+        isConnected: false,
       };
 
      // Your web app's Firebase configuration
